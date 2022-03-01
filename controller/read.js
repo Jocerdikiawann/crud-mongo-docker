@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
 
         if (!mahasiswa) {
             return res.status(404).json({
-                status: "",
+                status: "error",
                 message: "mahasiswa not found"
             })
         }
