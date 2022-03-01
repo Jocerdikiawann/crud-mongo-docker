@@ -9,6 +9,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    volumes:
+      - '.:/usr/src/app/'
     depends_on:
       - mongo
     networks:
@@ -24,8 +26,8 @@ services:
       - 27017:27017
     networks:
       - crud-mongo
-    # volumes:
-    #   - "mongo-data:/data/db"
+    volumes:
+      - "mongo-data:/data/db"
     expose:
       - 27017
     # command: mongod --auth
@@ -33,6 +35,6 @@ networks:
   crud-mongo:
     driver: bridge
 
-# volumes:
-#   mongo-data:
-#     driver: "local"
+volumes:
+  mongo-data:
+    driver: "local"

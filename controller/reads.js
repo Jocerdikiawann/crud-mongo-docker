@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
     try {
         var mahasiswa = await Mahasiswa.find()
         return res.status(200).json({
-            status: "konth",
+            status: "k",
             data: mahasiswa
         })
     } catch (error) {

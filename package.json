@@ -2,10 +2,9 @@
   "name": "crud-mongo",
   "version": "0.0.0",
   "private": true,
-  "main": "./bin/www",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -L main",
+    "start": "nodemon -L ./bin/www",
     "docker-down-all":"docker-compose down --rmi all; docker rmi -f $(docker images -aq); docker volume rm $(docker volume ls -q)"
   },
   "dependencies": {
