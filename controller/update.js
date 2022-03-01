@@ -1,5 +1,5 @@
 const Mahasiswa = require('../model/Mahasiswa')
-const Validotor = require('fastest-validator')
+const Validator = require('fastest-validator')
 const v = new Validator();
 
 module.exports = async (req, res) => {
@@ -20,10 +20,10 @@ module.exports = async (req, res) => {
             })
         }
 
-        const nim = body.nim
+        const nim = req.body.nim
 
-        const mahasiswa = await Mahasiswa.findOne({
-            nim: nim
+        const mahasiswa = await Mahasiswa.findById({
+            _id: req.params.id
         })
 
         if (!mahasiswa) {

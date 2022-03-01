@@ -1,6 +1,7 @@
-FROM node:17-alpine
+FROM node:slim
 WORKDIR /usr/src/app
-COPY package.json /usr/src/app/
+COPY package.json /usr/src/app
 RUN npm install
 COPY . .
-CMD [ "npm", "start" ]
+EXPOSE 3000
+CMD [ "npm","start" ]

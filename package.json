@@ -2,8 +2,11 @@
   "name": "crud-mongo",
   "version": "0.0.0",
   "private": true,
+  "main": "./bin/www",
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -L main",
+    "docker-down-all":"docker-compose down --rmi all; docker rmi -f $(docker images -aq); docker volume rm $(docker volume ls -q)"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
