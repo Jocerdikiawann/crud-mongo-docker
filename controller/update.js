@@ -6,9 +6,9 @@ module.exports = async (req, res) => {
     try {
         const body = req.body
         const schema = {
-            name: "string|empty:false",
-            nim: "string|empty:false",
-            class: "string|empty:false"
+            name: "string|optional",
+            nim: "string|optional",
+            class: "string|optional"
         }
 
         const validate = v.validate(body, schema)
@@ -19,8 +19,6 @@ module.exports = async (req, res) => {
                 message: validate
             })
         }
-
-        const nim = req.body.nim
 
         const mahasiswa = await Mahasiswa.findById({
             _id: req.params.id
@@ -33,10 +31,12 @@ module.exports = async (req, res) => {
             })
         }
 
+        const nim = req.body.nim
         if (nim) {
             const checkNim = await Mahasiswa.findOne({
                 nim: nim
             })
+
             if (checkNim && nim !== mahasiswa.nim) {
                 return res.status(409).json({
                     status: "error",
@@ -45,16 +45,18 @@ module.exports = async (req, res) => {
             }
         }
 
-        await Mahasiswa.update({
-            name: body.name,
-            nim: body.nim,
-            class: body.class
+        await Mahasiswa.updateOne(mahasiswa, body)
+
+        const updatedMahasiswa = await Mahasiswa.findById({
+            _id: req.params.id
         })
 
         return res.status(200).json({
             status: "success",
-            data: mahasiswa
+            data: updatedMahasiswa
         })
+
+
 
     } catch (error) {
         return res.status(500).json({

@@ -4,7 +4,8 @@ const {
 } = require('../config')
 
 mongoose.connect(MONGO_URL, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 }).catch((e) => {
   console.error('Connection error', e.message);
 });
