@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const {
   MONGO_URL
-} = require('../config')
+} = require('../utils/config')
 
 mongoose.connect(MONGO_URL, {
   useNewUrlParser: true,

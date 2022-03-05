@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon -L ./bin/www",
-    "docker-down-all":"docker-compose down --rmi all; docker rmi -f $(docker images -aq); docker volume rm $(docker volume ls -q)"
+    "docker-down-all": "docker-compose down --rmi all; docker rmi -f $(docker images -aq); docker volume rm $(docker volume ls -q)"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
