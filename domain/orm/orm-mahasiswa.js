@@ -31,6 +31,22 @@ exports.ReadById = async (id) => {
     }
 }
 
+exports.ReadByNim = async (nim) => {
+    try {
+        return await conn.db.mongoconnection.Mahasiswa.findOne({
+            nim: nim
+        })
+    } catch (error) {
+        console.log(" err orm-mahasiswa.ReadByNim = ", error);
+        return await {
+            err: {
+                status: "error",
+                message: error.message
+            }
+        }
+    }
+}
+
 exports.Create = async (data) => {
     try {
         return await conn.db.mongoconnection.Mahasiswa.create(data)
