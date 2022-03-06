@@ -1,4 +1,4 @@
-const _enum = require('./enum');
+const _enum = require('./enum_util');
 
 exports.LogSuccess = (msg) => {
     console.log(_enum.GREEN_LOG, msg);
