@@ -21,7 +21,7 @@ exports.Reads = async (req, res) => {
         }
     } catch (error) {
         console.log("error: ", error)
-        _data = await network_util.ResponseServiceNoData("error", error)
+        _data = await network_util.ResponseServiceNoData("error", error.message)
         return res.status(_enum.CODE_INTERNAL_SERVER_ERROR).json(_data)
     }
 }
@@ -43,7 +43,7 @@ exports.ReadById = async (req, res) => {
     } catch (error) {
         console.log("error: ", error)
         _status = response_orm.err.status,
-            _data = await network_util.ResponseServiceNoData(_status, error)
+            _data = await network_util.ResponseServiceNoData(_status, error.message)
         return res.status(_enum.CODE_INTERNAL_SERVER_ERROR, _data).json(_data)
     }
 }
