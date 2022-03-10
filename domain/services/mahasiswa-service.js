@@ -12,6 +12,9 @@ let _status = "",
 exports.Reads = async (req, res) => {
     try {
         response_orm = await ormMahasiswa.Reads()
+        response_orm.sort((a, b) => {
+            return a.nim - b.nim
+        })
         if (response_orm.err) {
             _status = response_orm.err.status, _message = response_orm.err.message,
                 _data = await network_util.ResponseServiceNoData(_status, _message)
@@ -33,6 +36,9 @@ exports.ReadById = async (req, res) => {
     try {
         const id = req.params.id
         response_orm = await ormMahasiswa.ReadById(id)
+        response_orm.sort((a, b) => {
+            return a.nim - b.nim
+        })
         if (response_orm.err) {
             _status = response_orm.err.status, _message = response_orm.err.message,
                 _data = await network_util.ResponseServiceNoData(_status, _message)
@@ -76,9 +82,20 @@ exports.Create = async (req, res) => {
             return res.status(_enum.CODE_CONFLICT).json(_data)
         }
 
-        response_orm = await ormMahasiswa.Create(body)
-        _status = "success", _data = await network_util.ResponseServiceHasData(_status, response_orm)
-        return res.status(_enum.CODE_OK).json(_data)
+        await ormMahasiswa.Create(body)
+        response_orm = await ormMahasiswa.Reads()
+        response_orm.sort((a, b) => {
+            return a.nim - b.nim
+        })
+        if (response_orm.err) {
+            _status = response_orm.err.status, _message = response_orm.err.message,
+                _data = await network_util.ResponseServiceNoData(_status, _message)
+            return res.status(_enum.CODE_BAD_REQUEST).json(_data)
+        } else {
+            _status = "success",
+                _data = await network_util.ResponseServiceHasData(_status, response_orm)
+            return res.status(_enum.CODE_CREATED).json(_data)
+        }
     } catch (error) {
         _status = "error", _message = error.message, _data = await network_util.ResponseServiceNoData(_status, _message)
         return res.status(_enum.CODE_BAD_REQUEST).json(_data)
@@ -142,11 +159,20 @@ exports.DeleteOne = async (req, res) => {
         }
 
         await ormMahasiswa.DeleteOne(filterById)
-
-        _status = "succes", _data = await network_util.ResponseServiceHasData(_status, {
-            message: "mahasiswa has been deleted"
+        response_orm = await ormMahasiswa.Reads()
+        response_orm.sort((a, b) => {
+            return a.nim - b.nim
         })
-        return res.status(_enum.CODE_OK).json(_data)
+        if (response_orm.err) {
+            _status = response_orm.err.status, _message = response_orm.err.message,
+                _data = await network_util.ResponseServiceNoData(_status, _message)
+            return res.status(_enum.CODE_BAD_REQUEST).json(_data)
+        } else {
+            _status = "success",
+                _data = await network_util.ResponseServiceHasData(_status, response_orm)
+            return res.status(_enum.CODE_CREATED).json(_data)
+        }
+
     } catch (error) {
 
     }
